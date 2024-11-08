@@ -6,7 +6,7 @@ export const PuzzleFour: React.FC = () => {
     const puzzleOneData = puzzles.puzzles[3]
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-blue-600 to-cyan-500 p-4 text-white">
+    <div className="h-[100vh] flex items-center justify-center bg-gradient-to-br from-blue-600 to-cyan-500 p-4 text-white">
       <QuizCard
         correctAnswer={puzzleOneData.correct_answer}
         title={puzzleOneData.title}
