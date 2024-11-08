@@ -13,13 +13,12 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useReward } from "react-rewards";
 import PuzzleOneHint from "../components/QuizHint";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   incrementQuestion,
-  selectActiveQuestionIndex,
   updateQuizStage,
 } from "../QuizSlice";
-import { useNavigate } from "react-router-dom";
+
 
 interface QuizCardProps {
   title: string;
