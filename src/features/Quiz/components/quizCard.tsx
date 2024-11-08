@@ -15,7 +15,7 @@ import { useReward } from "react-rewards";
 import PuzzleOneHint from "../components/QuizHint";
 import { useDispatch } from "react-redux";
 import NextLocation from "../components/nextLocationCard";
-import { incrementQuestion, updateQuizStage } from "../QuizSlice";
+import { updateQuizStage } from "../QuizSlice";
 
 interface QuizCardProps {
   title: string;
@@ -32,8 +32,8 @@ export default function QuizCard({
 }: QuizCardProps) {
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answer, setAnswer] = useState<string>("");
-  const [hasSumit, setHasSubmit] = useState<boolean>(false);
-
+  const [hasSubmit, setHasSubmit] = useState<boolean>(false);
+  const [didContinue, setDidContine] = useState<boolean>(false);
   const { reward } = useReward("rewardId", "confetti");
 
   const dispatch = useDispatch();
@@ -63,8 +63,8 @@ export default function QuizCard({
     setAnswer(e.target.value);
   };
 
-  const handleNextPuzzle = () => {
-    dispatch(incrementQuestion());
+  const handleNextLocation = () => {
+    setDidContine(true);
   };
 
   const handleSubmit = () => {
@@ -87,7 +87,9 @@ export default function QuizCard({
   return (
     <>
       <Card className="w-full max-w-md">
-        {!isCorrect ? (
+        {didContinue ? (
+          <NextLocation />
+        ) : (
           <>
             <CardHeader>
               <CardTitle className="text-2xl font-bold">{title}</CardTitle>
@@ -112,7 +114,7 @@ export default function QuizCard({
                 />
               </div>
 
-              {hasSumit && (
+              {hasSubmit && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -149,15 +151,13 @@ export default function QuizCard({
                   transition={{ duration: 0.5 }}
                   className="flex flex-col items-center space-y-2"
                 >
-                  <Button onClick={handleNextPuzzle} variant="outline">
-                    Next Question
+                  <Button onClick={handleNextLocation} variant="outline">
+                    Next Location
                   </Button>
                 </motion.div>
               )}
             </CardFooter>
           </>
-        ) : (
-          <NextLocation />
         )}
       </Card>
     </>

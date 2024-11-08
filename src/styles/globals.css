@@ -76,3 +76,15 @@
     @apply bg-background text-foreground;
   }
 }
+
+.scanner {
+  aspect-ratio: 1;
+}
+
+.scanner video {
+  object-fit: cover;
+}
+
+.scanner svg {
+display: none;
+}

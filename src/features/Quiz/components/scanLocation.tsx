@@ -1,54 +1,55 @@
-import { useState, useRef, useEffect } from 'react'
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Scanner } from '@yudiel/react-qr-scanner'
-import { Camera, XCircle } from 'lucide-react'
+import { useState, useRef, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Scanner } from "@yudiel/react-qr-scanner";
+import { Camera, QrCode, XCircle } from "lucide-react";
 
 export default function QRCodeScannerCard() {
-  const [scanning, setScanning] = useState(false)
-  const [result, setResult] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const scannerRef = useRef<HTMLDivElement>(null)
+  const [scanning, setScanning] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const scannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (scanning && scannerRef.current) {
-      scannerRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      scannerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }
-  }, [scanning])
+  }, [scanning]);
 
-//   const handleScan = (data: string | null) => {
-//     if (data) {
-//       setResult(data)
-//       setScanning(false)
-//     }
-//   }
+  //   const handleScan = (data: string | null) => {
+  //     if (data) {
+  //       setResult(data)
+  //       setScanning(false)
+  //     }
+  //   }
 
-//   const handleError = (err: Error) => {
-//     setError(err.message)
-//     setScanning(false)
-//   }
+  //   const handleError = (err: Error) => {
+  //     setError(err.message)
+  //     setScanning(false)
+  //   }
 
   const startScanning = () => {
-    setScanning(true)
-    setError(null)
-    setResult(null)
-  }
+    setScanning(true);
+    setError(null);
+    setResult(null);
+  };
 
   const stopScanning = () => {
-    setScanning(false)
-  }
+    setScanning(false);
+  };
 
   return (
-    <Card className="w-full max-w-[95%] sm:max-w-md mx-auto">
-      <CardHeader className="p-4">
-        <CardTitle className="text-xl font-bold">QR Code Scanner</CardTitle>
-        <p className="text-sm mt-1">Scan a QR code to proceed to the next clue</p>
-      </CardHeader>
-
+    <div className="w-80 h-80 aspect-square rounded-lg my-3 max-w-[80%] sm:max-w-md mx-auto bg-gray-200">
       <>
         {!scanning && !result && (
-          <div className="flex justify-center">
-            <Button onClick={startScanning} className="flex items-center space-x-2">
+          <div className="w-80 h-80 flex flex-col items-center justify-center space-y-4">
+            <QrCode className="w-32 h-32 text-primary" />
+            <Button
+              onClick={startScanning}
+              className="flex items-center space-x-4"
+            >
               <Camera className="w-4 h-4" />
               <span>Start Scanning</span>
             </Button>
@@ -56,11 +57,15 @@ export default function QRCodeScannerCard() {
         )}
 
         {scanning && (
-          <div ref={scannerRef} className="relative aspect-square">
+          <div ref={scannerRef} className="relative aspect-square rounded-lg ">
             <Scanner
-               onScan={(result) => console.log(result)}
-               onError={(err) => console.log(err)}
-              constraints={{ facingMode: 'environment' }}
+              onScan={(result) => console.log(result)}
+              onError={(err) => console.log(err)}
+              constraints={{ facingMode: "environment" }}
+              classNames={{
+                container: "scanner",
+              }}
+              formats={["qr_code"]}
             />
             <Button
               onClick={stopScanning}
@@ -75,7 +80,9 @@ export default function QRCodeScannerCard() {
 
         {result && (
           <div className="mt-4 p-4 bg-green-100 rounded-md">
-            <p className="text-green-800 font-medium">QR Code Scanned Successfully!</p>
+            <p className="text-green-800 font-medium">
+              QR Code Scanned Successfully!
+            </p>
             <p className="text-sm mt-2 break-all">{result}</p>
           </div>
         )}
@@ -87,15 +94,6 @@ export default function QRCodeScannerCard() {
           </div>
         )}
       </>
-
-      <CardFooter className="flex justify-center p-4">
-        {result && (
-          <Button onClick={startScanning} className="flex items-center space-x-2">
-            <Camera className="w-4 h-4" />
-            <span>Scan Another Code</span>
-          </Button>
-        )}
-      </CardFooter>
-    </Card>
-  )
+    </div>
+  );
 }
