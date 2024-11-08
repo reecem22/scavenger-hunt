@@ -41,14 +41,15 @@ export default function QRCodeScannerCard() {
   };
 
   return (
-    <div className="w-80 h-80 aspect-square rounded-lg my-3 max-w-[80%] sm:max-w-md mx-auto bg-gray-200">
+    <div className="w-60 h-60 aspect-square rounded-lg my-3 max-w-[80%] sm:max-w-md mx-auto bg-gray-200 border-2 border-gray-300">
       <>
         {!scanning && !result && (
-          <div className="w-80 h-80 flex flex-col items-center justify-center space-y-4">
-            <QrCode className="w-32 h-32 text-primary" />
+          <div className="w-60 h-60 flex flex-col items-center justify-center space-y-4">
+            <QrCode className="w-32 h-32 text-gray-400" />
             <Button
               onClick={startScanning}
               className="flex items-center space-x-4"
+              variant="secondary"
             >
               <Camera className="w-4 h-4" />
               <span>Start Scanning</span>
