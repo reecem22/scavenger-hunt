@@ -24,7 +24,6 @@ export function SkipQRScan() {
             <AlertDialogTrigger asChild>
                 <Button
                     variant="secondary"
-                    onClick={handleNextPuzzle}
                     className="bg-blue-100 text-blue-700 hover:bg-blue-200 rounded-full"
                 >
                     <InfoIcon /> skip?
@@ -39,7 +38,7 @@ export function SkipQRScan() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
+                    <AlertDialogAction onClick={handleNextPuzzle}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
