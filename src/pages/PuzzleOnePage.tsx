@@ -17,9 +17,6 @@ const PuzzleContainer: React.FC<PuzzleContainerProps> = ({ puzzleComponent: Puzz
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(activeQuestionIndex, puzzleStage)
-    console.log('active', activeQuestionIndex)
-    console.log('puzzleStage', puzzleStage)
     if (activeQuestionIndex !== puzzleStage) {
       navigate('/');
     }

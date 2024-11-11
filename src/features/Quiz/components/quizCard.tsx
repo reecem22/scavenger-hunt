@@ -73,7 +73,6 @@ export default function QuizCard({
       reward();
       setIsCorrect(true);
     } else {
-      console.log("here");
       setIsCorrect(false);
     }
 

@@ -1,9 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Scanner } from "@yudiel/react-qr-scanner";
+import { IDetectedBarcode, Scanner } from "@yudiel/react-qr-scanner";
 import { Camera, QrCode, XCircle } from "lucide-react";
 
-export default function QRCodeScannerCard() {
+interface IScanner {
+  handleCodeFound: (raw:string) => void; 
+}
+
+export default function QRCodeScannerCard({handleCodeFound}:IScanner) {
   const [scanning, setScanning] = useState(false);
   const [result, setResult] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -40,6 +44,11 @@ export default function QRCodeScannerCard() {
     setScanning(false);
   };
 
+  const handleScan = (result: IDetectedBarcode[]) => {
+    handleCodeFound(result[0].rawValue)
+    setScanning(false);
+  }
+
   return (
     <div className="w-60 h-60 aspect-square rounded-lg my-3 max-w-[80%] sm:max-w-md mx-auto bg-gray-200 border-2 border-gray-300">
       <>
@@ -60,9 +69,10 @@ export default function QRCodeScannerCard() {
         {scanning && (
           <div ref={scannerRef} className="relative aspect-square rounded-lg ">
             <Scanner
-              onScan={(result) => console.log(result)}
+              onScan={(result) => handleScan(result)}
               onError={(err) => console.log(err)}
               constraints={{ facingMode: "environment" }}
+              components={{ audio: false, }}
               classNames={{
                 container: "scanner",
               }}
@@ -78,6 +88,8 @@ export default function QRCodeScannerCard() {
             </Button>
           </div>
         )}
+
+        
 
         {result && (
           <div className="mt-4 p-4 bg-green-100 rounded-md">
