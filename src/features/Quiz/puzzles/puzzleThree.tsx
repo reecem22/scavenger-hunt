@@ -12,6 +12,7 @@ export const PuzzleThree: React.FC = () => {
         title={puzzleOneData.title}
         solution={puzzleOneData.solution}
         question={puzzleOneData.clue}
+        location={puzzleOneData.location}
       />
     </div>
   );

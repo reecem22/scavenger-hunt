@@ -13,15 +13,17 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useReward } from "react-rewards";
 import PuzzleOneHint from "../components/QuizHint";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import NextLocation from "../components/nextLocationCard";
-import { updateQuizStage } from "../QuizSlice";
+import { selectActiveQuestionIndex, updateQuizStage } from "../QuizSlice";
+import FinalLocation from "./FinalLocationCard";
 
 interface QuizCardProps {
   title: string;
   question: string;
   correctAnswer: number;
   solution: any;
+  location: string
 }
 
 export default function QuizCard({
@@ -29,6 +31,7 @@ export default function QuizCard({
   correctAnswer,
   title,
   solution,
+  location
 }: QuizCardProps) {
   const [isCorrect, setIsCorrect] = useState<boolean>(false);
   const [answer, setAnswer] = useState<string>("");
@@ -36,9 +39,19 @@ export default function QuizCard({
   const [didContinue, setDidContine] = useState<boolean>(false);
   const { reward } = useReward("rewardId", "confetti");
 
+  const [isFinal, setIsFinal] = useState<boolean>(false)
+
   const dispatch = useDispatch();
 
+
+  const activeQuestionIndex = useSelector(selectActiveQuestionIndex);
+
   useEffect(() => {
+
+    if (activeQuestionIndex === 4) {
+      setIsFinal(true)
+    }
+
     // This effect will run on component mount
     const viewport = document.querySelector("meta[name=viewport]");
     if (viewport) {
@@ -87,7 +100,10 @@ export default function QuizCard({
     <>
       <Card className="w-full max-w-md">
         {didContinue ? (
-          <NextLocation />
+          <>
+            {isFinal ? (<FinalLocation/>) : (<NextLocation locationString={location} />)}
+          </>
+
         ) : (
           <>
             <CardHeader>

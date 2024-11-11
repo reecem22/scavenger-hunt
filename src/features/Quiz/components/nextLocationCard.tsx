@@ -15,8 +15,13 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { selectActiveQuestionIndex } from "../QuizSlice";
+import { SkipQRScan } from "./skipLocation";
 
-export default function NextLocation() {
+interface INextLocation {
+  locationString: string
+}
+
+export default function NextLocation({locationString}:INextLocation) {
   const dispatch = useDispatch();
   const handleNextPuzzle = () => {
     dispatch(incrementQuestion());
@@ -47,18 +52,25 @@ export default function NextLocation() {
 
   return (
     <>
-      <CardHeader>
-        <CardTitle className="text-2xl font-bold">Scan Next Location <span>skip</span></CardTitle>
-        <CardDescription className="text-md mt-2">
+
+      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+        <div>
+          <CardTitle className="text-2xl font-bold">Scan Next Location</CardTitle>
+          <CardDescription className="text-xs text-muted-foreground">
+
+          </CardDescription>
+        </div>
+        <SkipQRScan/>
+      </CardHeader>
+
+      <CardContent>
+        <p className="text-muted-foreground mb-5">
           You answered correctly! Now, it’s time to continue your journey. Click
           the link below to reveal the location of your next QR code. Use
           What3Words to navigate to the exact spot – switching to satellite view
           can help you find it faster. Scan the code there to unlock your next
           question. Happy hunting!
-        </CardDescription>
-      </CardHeader>
-
-      <CardContent>
+        </p>
         <AnimatePresence>
           {showAlert && (
             <motion.div
@@ -98,14 +110,14 @@ export default function NextLocation() {
             </motion.div>
           )}
         </AnimatePresence>
+        {!showAlert && (<QRCodeScannerCard handleCodeFound={handleQRcodefound} />)}
 
-        <QRCodeScannerCard handleCodeFound={handleQRcodefound} />
       </CardContent>
       <CardFooter className="flex justify-between">
         <Button
           onClick={() =>
             window.open(
-              `https://what3words.com/troublesome.ants.glum`,
+              `https://what3words.com${locationString}`,
               "_blank"
             )
           }
