@@ -3,7 +3,7 @@ export const puzzles = {
     {
       title: "Our First Connection",
       location:"/troublesome.ants.glum",
-      clue: "Our journey began on a special day, and here\u2019s a problem to take you to your next clue: Multiply the month number (February) by the day of the month we met. Then, take the square root of this result. Finally, add the number of letters in the word \u2018connection\u2019.",
+      clue: "Our journey began on a special day, and here\u2019s a problem to take you to your next clue: Multiply the month number (February) by the day of the month we met. Then, take the square root of this result. Finally, add the number of letters in the word \u2018connection\u2019. Round the answer to the nearest whole number",
       solution: {
         month: 2,
         day: 27,
