@@ -74,6 +74,8 @@ export default function QuizCard({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAnswer(e.target.value);
+    setIsCorrect(false)
+    setHasSubmit(false)
   };
 
   const handleNextLocation = () => {

@@ -85,8 +85,7 @@ const HomePage: React.FC = () => {
                     <h3 className="text-md font-semibold">Final Destination</h3>
                     <p className="text-xs sm:text-sm text-muted-foreground">
                       After completing all four challenges, the last QR code
-                      will lead you to a meaningful place where the ultimate
-                      surprise awaits. 💍✨
+                      will lead you to a place where I want to ask a life changing question. 💍✨
                     </p>
                   </div>
                 </li>
